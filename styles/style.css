@@ -1,0 +1,30 @@
+body {
+  max-width: 700px;
+  margin: 60px auto;
+  font-family: Georgia, serif;
+  line-height: 1.7;
+  padding: 0 20px;
+  color: #1f1f1f;
+  background: #f9f7f2;
+}
+
+a {
+  color: #1f1f1f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0 0;
+}
+
+li {
+  margin: 0 0 18px;
+}
+
+span {
+  color: #4a4a4a;
+  font-size: 0.95em;
+}
