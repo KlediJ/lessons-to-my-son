@@ -1,0 +1,66 @@
+name: Build index from posts
+
+on:
+  push:
+    paths:
+      - "posts/**"
+      - ".github/workflows/build-index.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build index.html from posts
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const postsDir = path.join(process.cwd(), 'posts');
+          const files = fs.readdirSync(postsDir)
+            .filter(f => f.endsWith('.html'))
+            .sort()
+            .reverse();
+
+          function extractTitle(html) {
+            const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+            const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+            return (titleMatch?.[1] || h1Match?.[1] || 'Untitled').trim();
+          }
+
+          function prettyDateFromFilename(f) {
+            const m = f.match(/^(\d{4})-(\d{2})-(\d{2})-/);
+            if (!m) return '';
+            const [_, y, mo, d] = m;
+            const dt = new Date(`${y}-${mo}-${d}T00:00:00`);
+            return dt.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+          }
+
+          const items = files.map(f => {
+            const html = fs.readFileSync(path.join(postsDir, f), 'utf8');
+            const title = extractTitle(html);
+            const date = prettyDateFromFilename(f);
+            return `    <li>\n      <a href="posts/${f}">${title}</a><br>\n      <span>${date}</span>\n    </li>`;
+          }).join('\n');
+
+          const index = `<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="UTF-8">\n  <title>Lessons to My Son</title>\n  <link rel="stylesheet" href="styles/style.css">\n</head>\n<body>\n  <h1>Lessons to My Son</h1>\n  <p>A personal, curated archive of letters written over time.</p>\n\n  <ul>\n${items}\n  </ul>\n</body>\n</html>\n`;
+
+          fs.writeFileSync(path.join(process.cwd(), 'index.html'), index);
+          console.log('Updated index.html');
+          NODE
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-update index.html from posts"
+          git push
