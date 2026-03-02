@@ -1,40 +1,87 @@
+/* styles/style.css */
+
+/* Base */
+:root {
+  --max: 720px;
+  --pad: 20px;
+
+  --bg: #f7f3ea;
+  --text: #111;
+  --muted: rgba(0,0,0,0.72);
+  --faint: rgba(0,0,0,0.10);
+  --line: rgba(0,0,0,0.18);
+  --link: rgba(0,0,0,0.25);
+  --linkHover: rgba(0,0,0,0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  max-width: 700px;
-  margin: 60px auto;
-  font-family: Georgia, serif;
-  line-height: 1.7;
-  padding: 0 20px;
-  color: #1f1f1f;
-  background: #f9f7f2;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0 0 14px;
+  letter-spacing: 0.2px;
+}
+
+p {
+  margin: 0 0 16px;
 }
 
 a {
-  color: #1f1f1f;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--link);
+  padding-bottom: 1px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 30px 0 0;
+a:hover {
+  border-bottom-color: var(--linkHover);
 }
 
-li {
-  margin: 0 0 18px;
+/* Default page layout (post pages) */
+body:not(.index) {
+  max-width: var(--max);
+  margin: 48px auto 60px;
+  padding: 0 var(--pad);
 }
 
-span {
-  color: #4a4a4a;
-  font-size: 0.95em;
+/* Keep date line slightly muted */
+p strong {
+  font-weight: 700;
 }
+
+p strong + span,
+p strong + text {
+  opacity: 0.9;
+}
+
+/* Back link spacing on post pages */
+body:not(.index) a[href*="index.html"] {
+  display: inline-block;
+  margin-top: 16px;
+}
+
 /* ===== Index theme: space / trains / LEGO (subtle) ===== */
-.index {
+body.index {
   min-height: 100vh;
-}
+  max-width: none;
+  margin: 0;
+  padding: 0;
 
-/* subtle starfield using layered radial-gradients (no images) */
-.index {
+  /* subtle starfield using layered radial-gradients (no images) */
   background:
     radial-gradient(circle at 12% 18%, rgba(0,0,0,0.06) 1px, transparent 1px),
     radial-gradient(circle at 72% 28%, rgba(0,0,0,0.05) 1px, transparent 1px),
@@ -46,9 +93,9 @@ span {
 }
 
 .site-header {
-  max-width: 720px;
+  max-width: var(--max);
   margin: 48px auto 18px;
-  padding: 0 20px;
+  padding: 0 var(--pad);
 }
 
 .brand {
@@ -65,7 +112,6 @@ span {
 
 .brand-text h1 {
   margin: 0;
-  letter-spacing: 0.2px;
 }
 
 .tagline {
@@ -78,9 +124,10 @@ span {
 .divider {
   margin: 18px 0 0;
   height: 12px;
-  border-top: 2px solid rgba(0,0,0,0.18);
+  border-top: 2px solid var(--line);
   position: relative;
 }
+
 .divider::after {
   content: "";
   position: absolute;
@@ -90,8 +137,8 @@ span {
   height: 2px;
   background: repeating-linear-gradient(
     to right,
-    rgba(0,0,0,0.18),
-    rgba(0,0,0,0.18) 14px,
+    var(--line),
+    var(--line) 14px,
     transparent 14px,
     transparent 26px
   );
@@ -99,9 +146,9 @@ span {
 
 /* content */
 .content {
-  max-width: 720px;
+  max-width: var(--max);
   margin: 0 auto;
-  padding: 0 20px 60px;
+  padding: 0 var(--pad) 60px;
 }
 
 .posts {
@@ -112,18 +159,17 @@ span {
 
 .post {
   padding: 14px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.10);
+  border-bottom: 1px solid var(--faint);
 }
 
 .post-link {
   display: inline-block;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid var(--link);
   padding-bottom: 2px;
 }
 
 .post-link:hover {
-  border-bottom-color: rgba(0,0,0,0.5);
+  border-bottom-color: var(--linkHover);
 }
 
 .post-meta {
@@ -135,7 +181,7 @@ span {
   gap: 8px;
 }
 
-/* LEGO-stud-ish badge: rounded pill + tiny studs via box-shadow */
+/* LEGO-stud-ish badge */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -145,6 +191,7 @@ span {
   font-size: 0.85rem;
   position: relative;
 }
+
 .badge::before {
   content: "";
   width: 6px;
@@ -159,3 +206,9 @@ span {
   opacity: 0.5;
 }
 
+/* Small screens */
+@media (max-width: 480px) {
+  h1 { font-size: 1.7rem; }
+  .site-header { margin-top: 38px; }
+  .tagline { font-size: 0.95rem; }
+}
