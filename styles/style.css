@@ -28,3 +28,134 @@ span {
   color: #4a4a4a;
   font-size: 0.95em;
 }
+/* ===== Index theme: space / trains / LEGO (subtle) ===== */
+.index {
+  min-height: 100vh;
+}
+
+/* subtle starfield using layered radial-gradients (no images) */
+.index {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0,0,0,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 72% 28%, rgba(0,0,0,0.05) 1px, transparent 1px),
+    radial-gradient(circle at 45% 62%, rgba(0,0,0,0.04) 1px, transparent 1px),
+    radial-gradient(circle at 85% 78%, rgba(0,0,0,0.035) 1px, transparent 1px),
+    radial-gradient(circle at 22% 82%, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 220px 220px, 260px 260px, 300px 300px, 340px 340px, 380px 380px;
+  background-repeat: repeat;
+}
+
+.site-header {
+  max-width: 720px;
+  margin: 48px auto 18px;
+  padding: 0 20px;
+}
+
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.brand-mark {
+  font-size: 22px;
+  line-height: 1;
+  margin-top: 6px;
+}
+
+.brand-text h1 {
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.tagline {
+  margin: 8px 0 0;
+  opacity: 0.75;
+  font-size: 0.98rem;
+}
+
+/* train-track divider */
+.divider {
+  margin: 18px 0 0;
+  height: 12px;
+  border-top: 2px solid rgba(0,0,0,0.18);
+  position: relative;
+}
+.divider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(0,0,0,0.18),
+    rgba(0,0,0,0.18) 14px,
+    transparent 14px,
+    transparent 26px
+  );
+}
+
+/* content */
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+.posts {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+
+.post {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.10);
+}
+
+.post-link {
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  padding-bottom: 2px;
+}
+
+.post-link:hover {
+  border-bottom-color: rgba(0,0,0,0.5);
+}
+
+.post-meta {
+  margin-top: 8px;
+  opacity: 0.75;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* LEGO-stud-ish badge: rounded pill + tiny studs via box-shadow */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border: 1px solid rgba(0,0,0,0.20);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  position: relative;
+}
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.25);
+  margin-right: 8px;
+  box-shadow: 10px 0 0 rgba(0,0,0,0.18), 20px 0 0 rgba(0,0,0,0.12);
+}
+
+.meta-dot {
+  opacity: 0.5;
+}
+
